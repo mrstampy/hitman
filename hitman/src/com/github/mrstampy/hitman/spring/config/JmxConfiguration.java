@@ -1,4 +1,4 @@
-package com.github.hitman.spring.config;
+package com.github.mrstampy.hitman.spring.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

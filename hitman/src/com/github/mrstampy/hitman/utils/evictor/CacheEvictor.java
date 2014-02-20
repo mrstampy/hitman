@@ -1,6 +1,6 @@
-package com.github.hitman.utils.evictor;
+package com.github.mrstampy.hitman.utils.evictor;
 
-import com.github.hitman.entity.AbstractEntity;
+import com.github.mrstampy.hitman.entity.AbstractEntity;
 
 public interface CacheEvictor {
   

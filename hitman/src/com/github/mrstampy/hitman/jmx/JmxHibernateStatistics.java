@@ -1,4 +1,4 @@
-package com.github.hitman.jmx;
+package com.github.mrstampy.hitman.jmx;
 
 import javax.annotation.PostConstruct;
 import javax.management.ObjectName;

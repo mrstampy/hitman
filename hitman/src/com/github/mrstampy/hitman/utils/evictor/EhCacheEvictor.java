@@ -1,4 +1,4 @@
-package com.github.hitman.utils.evictor;
+package com.github.mrstampy.hitman.utils.evictor;
 
 import java.lang.management.ManagementFactory;
 

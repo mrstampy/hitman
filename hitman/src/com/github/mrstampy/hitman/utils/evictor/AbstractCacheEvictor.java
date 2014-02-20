@@ -1,4 +1,4 @@
-package com.github.hitman.utils.evictor;
+package com.github.mrstampy.hitman.utils.evictor;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.github.hitman.entity.AbstractEntity;
+import com.github.mrstampy.hitman.entity.AbstractEntity;
 
 public abstract class AbstractCacheEvictor<R extends Region> implements CacheEvictor {
   private static final Logger log = LoggerFactory.getLogger(AbstractCacheEvictor.class);

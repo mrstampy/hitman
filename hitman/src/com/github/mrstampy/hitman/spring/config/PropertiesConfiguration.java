@@ -1,4 +1,4 @@
-package com.github.hitman.spring.config;
+package com.github.mrstampy.hitman.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

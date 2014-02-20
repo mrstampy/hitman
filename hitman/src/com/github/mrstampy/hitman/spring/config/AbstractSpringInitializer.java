@@ -1,4 +1,4 @@
-package com.github.hitman.spring.config;
+package com.github.mrstampy.hitman.spring.config;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

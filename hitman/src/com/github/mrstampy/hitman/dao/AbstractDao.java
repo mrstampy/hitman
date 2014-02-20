@@ -1,4 +1,4 @@
-package com.github.hitman.dao;
+package com.github.mrstampy.hitman.dao;
 
 import java.io.Serializable;
 import java.util.List;

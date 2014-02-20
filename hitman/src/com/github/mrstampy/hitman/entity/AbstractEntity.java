@@ -1,4 +1,4 @@
-package com.github.hitman.entity;
+package com.github.mrstampy.hitman.entity;
 
 import java.io.Serializable;
 
