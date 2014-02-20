@@ -12,7 +12,7 @@ import org.springframework.jmx.export.annotation.ManagedOperationParameters;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
-import com.hitman.utils.evictor.CacheEvictor;
+import com.github.hitman.utils.evictor.CacheEvictor;
 
 @Component
 @ManagedResource(description = "JMX Second Level Cache Eviction", objectName = "com.github.hitman.jmx:name=JmxCacheEvictor")

@@ -14,13 +14,13 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.hitman.spring.config.datasource.BoneCPDataSourceCreator;
-import com.hitman.spring.config.datasource.C3P0DataSourceCreator;
-import com.hitman.spring.config.datasource.DataSourceCreator;
-import com.hitman.spring.config.datasource.TomcatJDBCDataSourceCreator;
-import com.hitman.spring.config.datasource.ViburDBCPDataSourceCreator;
-import com.hitman.utils.evictor.CacheEvictor;
-import com.hitman.utils.evictor.EhCacheEvictor;
+import com.github.hitman.spring.config.datasource.BoneCPDataSourceCreator;
+import com.github.hitman.spring.config.datasource.C3P0DataSourceCreator;
+import com.github.hitman.spring.config.datasource.DataSourceCreator;
+import com.github.hitman.spring.config.datasource.TomcatJDBCDataSourceCreator;
+import com.github.hitman.spring.config.datasource.ViburDBCPDataSourceCreator;
+import com.github.hitman.utils.evictor.CacheEvictor;
+import com.github.hitman.utils.evictor.EhCacheEvictor;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)

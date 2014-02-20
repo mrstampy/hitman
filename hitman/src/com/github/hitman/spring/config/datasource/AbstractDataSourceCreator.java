@@ -1,4 +1,4 @@
-package com.hitman.spring.config.datasource;
+package com.github.hitman.spring.config.datasource;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 

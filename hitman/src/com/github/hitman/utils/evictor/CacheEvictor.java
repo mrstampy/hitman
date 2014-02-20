@@ -1,4 +1,4 @@
-package com.hitman.utils.evictor;
+package com.github.hitman.utils.evictor;
 
 import com.github.hitman.entity.AbstractEntity;
 

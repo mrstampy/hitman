@@ -1,4 +1,4 @@
-package com.hitman.spring.config.datasource;
+package com.github.hitman.spring.config.datasource;
 
 import java.beans.PropertyVetoException;
 import java.util.Properties;
