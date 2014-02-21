@@ -9,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * An application using HIT would have 'n' number of configuration classes,
- * where 'n' >= 1.
+ * HIT example configuration. An application using HIT would have 'n' number of
+ * configuration classes, where 'n' >= 1.
  * 
  * @author burton
  * 

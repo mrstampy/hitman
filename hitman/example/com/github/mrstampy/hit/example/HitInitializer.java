@@ -12,6 +12,12 @@ import com.github.mrstampy.hit.spring.config.HibernateConfiguration;
 import com.github.mrstampy.hit.spring.config.JmxConfiguration;
 import com.github.mrstampy.hit.spring.config.PropertiesConfiguration;
 
+/**
+ * HIT example initializer and tester.
+ * 
+ * @author burton
+ * 
+ */
 public class HitInitializer extends AbstractSpringInitializer {
   private static final Logger log = LoggerFactory.getLogger(HitInitializer.class);
 
@@ -26,11 +32,20 @@ public class HitInitializer extends AbstractSpringInitializer {
     //@formatter:on
   }
 
+  /**
+   * Executes a series of operations on the 'hit' database. Three {@link Hit}
+   * records are inserted, then the list is queried four times demonstrating the
+   * effectiveness of second level caching (three times in separate threads).
+   * The records are then deleted.
+   * 
+   * @param args
+   * @throws Exception
+   */
   public static void main(String[] args) throws Exception {
     HitInitializer hitter = new HitInitializer();
 
     HitDao dao = hitter.bean(HitDao.class);
-    
+
     insert(dao, "Mr Stampy is the");
     insert(dao, "Hibernate Induction Trigger");
     insert(dao, "man");
@@ -51,9 +66,9 @@ public class HitInitializer extends AbstractSpringInitializer {
 
     cdl = retrieveAll(hitter);
     cdl.await();
-    
+
     hitter.stop();
-    
+
     log.info("HIT example complete");
     System.exit(0);
   }

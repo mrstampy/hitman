@@ -11,12 +11,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import com.github.mrstampy.hit.entity.AbstractEntity;
 
+/**
+ * HIT example entity class. This class maps to a table called 'hit' in a
+ * database called 'hit'. It contains 3 properties, an auto generated primary
+ * key, a string and a boolean.
+ * 
+ * @author burton
+ * 
+ */
 @Entity
 @Table(name = "hit", schema = "hit")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Hit extends AbstractEntity {
   private static final long serialVersionUID = -5867494274708524421L;
-  
+
   private int id;
   private String value;
   private boolean awesome;

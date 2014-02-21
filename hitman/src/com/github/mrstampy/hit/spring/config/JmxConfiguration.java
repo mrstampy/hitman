@@ -15,8 +15,26 @@ import org.springframework.jmx.support.ConnectorServerFactoryBean;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
 /**
- * IMPORTANT: Add '-Dcom.sun.management.jmxremote' to the startup VM parms to
- * enable JMX. Use JConsole to connect.
+ * Configuration class enabling <a href=
+ * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/jmx.html"
+ * >JMX via Spring</a>. Important information about JMX can be found on <a href=
+ * "http://docs.oracle.com/javase/6/docs/technotes/guides/management/agent.html"
+ * >the Oracle site</a>.<br>
+ * <br>
+ * Add the following to the startup parameters of your application to enable JMX.  These are
+ * a subset of the parameters available; refer to the <a href=
+ * "http://docs.oracle.com/javase/6/docs/technotes/guides/management/agent.html"
+ * >Oracle documentation</a> for a complete list.<br>
+ * <br>
+ * <ol>
+ * <li><b>-Dcom.sun.management.jmxremote</b> - necessary to enable JMX</li>
+ * <li><b>-Dcom.sun.management.jmxremote.port=9999</b> - good form to specify the port on which to connect</li>
+ * <li><b>-Dcom.sun.management.jmxremote.local.only=true</b> - allows only local JMX connections</b></li>
+ * </ol><br>
+ * <br>
+ * If connecting remotely (local.only=false), the URL to use is of the following form:<br>
+ * <br>
+ * <b>service:jmx:rmi:///jndi/rmi://[hostName]:[portNum]/jmxrmi</b>
  * 
  */
 @Configuration

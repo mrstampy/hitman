@@ -2,6 +2,7 @@ package com.github.mrstampy.hit.utils.evictor;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.io.Serializable;
 import java.util.Map.Entry;
 
 import org.hibernate.SessionFactory;
@@ -10,8 +11,6 @@ import org.hibernate.engine.spi.CacheImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.github.mrstampy.hit.entity.AbstractEntity;
 
 public abstract class AbstractCacheEvictor<R extends Region> implements CacheEvictor {
   private static final Logger log = LoggerFactory.getLogger(AbstractCacheEvictor.class);
@@ -72,10 +71,15 @@ public abstract class AbstractCacheEvictor<R extends Region> implements CacheEvi
     evictCacheRegion(region);
   }
 
+  /**
+   * Subclasses implement to evict the specified region.
+   * 
+   * @param region
+   */
   protected abstract void evictCacheRegion(R region);
 
   @Override
-  public void evictEntityCache(Class<? extends AbstractEntity> clazz) {
+  public void evictEntityCache(Class<? extends Serializable> clazz) {
     if (clazz == null) {
       log.error("No class specified to evict entity cache");
       return;

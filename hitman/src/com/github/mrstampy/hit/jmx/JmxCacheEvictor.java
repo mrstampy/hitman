@@ -12,16 +12,18 @@ import org.springframework.jmx.export.annotation.ManagedOperationParameters;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
 
+import com.github.mrstampy.hit.spring.config.JmxConfiguration;
 import com.github.mrstampy.hit.utils.evictor.CacheEvictor;
 
 /**
- * Provides the ability to evict second level cache via JMX
+ * Provides the ability to evict second level cache via JMX.
  * 
  * @author burton
- * 
+ * @see CacheEvictor
+ * @see JmxConfiguration
  */
 @Component
-@ManagedResource(description = "JMX Second Level Cache Eviction", objectName = "com.github.hitman.jmx:name=JmxCacheEvictor")
+@ManagedResource(description = "JMX Second Level Cache Eviction", objectName = "com.github.mrstampy.hit.jmx:name=JmxCacheEvictor")
 public class JmxCacheEvictor {
   private static final Logger log = LoggerFactory.getLogger(JmxCacheEvictor.class);
 

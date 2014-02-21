@@ -42,14 +42,14 @@ public abstract class AbstractDataSourceCreator<DS extends DataSource> implement
 
   /**
    * Used by implementations to define the maximum size of the connection pool
-   * if the 'datasource.property.file property has not been defined.
+   * if the 'datasource.property.file' property has not been defined.
    */
   @Value("${max.active.connections}")
   protected int maxActive;
 
   /**
    * Used by implementations to define the minimum size of the connection pool
-   * if the 'datasource.property.file property has not been defined.
+   * if the 'datasource.property.file' property has not been defined.
    */
   @Value("${min.idle.connections}")
   protected int minIdle;
