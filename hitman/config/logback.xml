@@ -12,7 +12,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.github.hitman" level="debug" />
+	<logger name="com.github.mrstampy.hit" level="debug" />
 	<logger name="org.springframework" level="info" />
 	<logger name="org.hibernate" level="info" />
 	
