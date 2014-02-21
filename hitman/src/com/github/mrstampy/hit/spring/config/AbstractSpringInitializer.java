@@ -8,6 +8,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import com.github.mrstampy.hit.dao.AbstractDao;
+
+/**
+ * Abstract initializer for Spring. The {@link #configure()} implementation will
+ * return context specifying all classes annotated with <a href=
+ * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts"
+ * >the configuration annotation</a>, as required.<br>
+ * <br>
+ * Implementations can expose the {@link #applicationContext()} and
+ * {@link #bean(Class)} methods to allow non-Spring code to obtain Spring bean
+ * references ie. to access an {@link AbstractDao} in order to perfom a database
+ * operation. For applications implemented in Spring subclasses allow the
+ * application to be started in the standard Java runtime environment.
+ * 
+ * @author burton
+ * 
+ */
 public abstract class AbstractSpringInitializer {
   private static final Logger log = LoggerFactory.getLogger(AbstractSpringInitializer.class);
 
@@ -15,6 +32,13 @@ public abstract class AbstractSpringInitializer {
 
   private Lock lock = new ReentrantLock(true);
 
+  /**
+   * Returns the Spring application context, creating one if it has not yet been
+   * created.
+   * 
+   * @return
+   * @see #configure()
+   */
   protected ApplicationContext applicationContext() {
     if (applicationContext == null) {
       lock.lock();
@@ -32,6 +56,13 @@ public abstract class AbstractSpringInitializer {
     return applicationContext;
   }
 
+  /**
+   * Scans packages for Spring annotated classes, if required. This method is
+   * provided as convenience and configuration beans annotated with the
+   * component scan annotation should be preferred.
+   * 
+   * @param packages
+   */
   protected void scanPackages(String... packages) {
     if (packages == null || packages.length == 0) {
       log.error("No packages specified for scanning; configuration error.  Exiting");
@@ -48,10 +79,19 @@ public abstract class AbstractSpringInitializer {
     applicationContext.scan(packages);
   }
 
+  /**
+   * Returns the Spring bean specified by the class.
+   * 
+   * @param clazz
+   * @return
+   */
   protected <T> T bean(Class<T> clazz) {
     return applicationContext().getBean(clazz);
   }
 
+  /**
+   * Stops the application context.
+   */
   protected void stop() {
     if (applicationContext == null) {
       log.error("Application context not initialized");
@@ -64,6 +104,18 @@ public abstract class AbstractSpringInitializer {
     log.info("Spring context stopped");
   }
 
+  /**
+   * Implement to return a context, specifying all required <a href=
+   * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/beans.html#beans-java-basic-concepts"
+   * >configuration beans</a>. It is expected that any applications will have
+   * their own configuration beans in addition to the ones included in HIT.
+   * 
+   * @return
+   * 
+   * @see HibernateConfiguration
+   * @see JmxConfiguration
+   * @see PropertiesConfiguration
+   */
   protected abstract AnnotationConfigApplicationContext configure();
 
   private String getLogMessage(String[] packages) {

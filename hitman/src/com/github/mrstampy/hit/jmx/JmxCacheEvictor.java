@@ -14,6 +14,12 @@ import org.springframework.stereotype.Component;
 
 import com.github.mrstampy.hit.utils.evictor.CacheEvictor;
 
+/**
+ * Provides the ability to evict second level cache via JMX
+ * 
+ * @author burton
+ * 
+ */
 @Component
 @ManagedResource(description = "JMX Second Level Cache Eviction", objectName = "com.github.hitman.jmx:name=JmxCacheEvictor")
 public class JmxCacheEvictor {
@@ -23,20 +29,18 @@ public class JmxCacheEvictor {
   private CacheEvictor cacheEvictor;
 
   @ManagedOperation(description = "Evicts the specified cache region")
-  @ManagedOperationParameters({ 
-    @ManagedOperationParameter(name = "cacheRegion", description = "The name of the cache region to evict")
-  })
+  @ManagedOperationParameters({ @ManagedOperationParameter(name = "cacheRegion", description = "The name of the cache region to evict") })
   public void evict(String cacheRegion) {
     log.debug("JMX eviction of cache region '{}'", cacheRegion);
     cacheEvictor.evictCache(cacheRegion);
   }
-  
+
   @ManagedAttribute(description = "Returns the names of the second level cache regions")
   public String[] getCacheRegions() {
     log.debug("JMX returning all cache region names");
     return CacheManager.getInstance().getCacheNames();
   }
-  
+
   @ManagedOperation(description = "Evicts all cache region")
   public void evictAll() {
     log.debug("JMX evicting all cache regions");

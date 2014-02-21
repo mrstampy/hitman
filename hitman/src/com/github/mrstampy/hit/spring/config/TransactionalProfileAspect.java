@@ -7,6 +7,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * This aspect wraps all methods marked with a <a href=
+ * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/transaction.html"
+ * >transaction boundary</a> and if the log level is set to debug, will show the
+ * time spent executing the method in nanoseconds.
+ * 
+ * @author burton
+ * 
+ */
 @Aspect
 @Component
 public class TransactionalProfileAspect {

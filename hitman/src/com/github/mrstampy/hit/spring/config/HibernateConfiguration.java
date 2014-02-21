@@ -25,7 +25,7 @@ import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
-@ComponentScan("***REMOVED***")
+@ComponentScan("com.github.mrstampy.hit")
 public class HibernateConfiguration {
   private static final Logger log = LoggerFactory.getLogger(HibernateConfiguration.class);
 
