@@ -6,14 +6,14 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 /**
- * Loads the configuration 'custom.properties' and 'hibernate.properties' from
+ * Loads the configuration 'hit.properties' and 'hibernate.properties' from
  * the class path, making the properties available to the application.
  * 
  * @author burton
  * 
  */
 @Configuration
-@PropertySource({ "classpath:custom.properties", "classpath:hibernate.properties" })
+@PropertySource({ "classpath:hit.properties", "classpath:hibernate.properties" })
 public class PropertiesConfiguration {
 
   /**

@@ -29,10 +29,6 @@ public class HitInitializer extends AbstractSpringInitializer {
   public static void main(String[] args) throws Exception {
     HitInitializer hitter = new HitInitializer();
 
-    // Use a configuration class with a component scan annotation
-    // in preference to this.
-    hitter.scanPackages("com.github.mrstampy.hit.example");
-
     HitDao dao = hitter.bean(HitDao.class);
     
     insert(dao, "Mr Stampy is the");
@@ -63,6 +59,7 @@ public class HitInitializer extends AbstractSpringInitializer {
   }
 
   private static void delete(HitDao dao) {
+    log.info("******** This get all will get from second level cache, will be ~ 10X faster");
     List<Hit> list = dao.getAllCacheable();
     for (Hit hit : list) {
       log.info("Deleting hit {}", hit);

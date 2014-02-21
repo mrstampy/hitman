@@ -17,15 +17,22 @@
 	<property name="maven-jar" value="${basedir}/build/${artifactId}-&hit.version;.jar" />
 	<property name="maven-javadoc-jar" value="${basedir}/build/${artifactId}-&hit.version;-javadoc.jar" />
 	<property name="maven-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-sources.jar" />
-	<property name="maven-config-jar" value="${basedir}/build/${artifactId}-&hit.version;-config.zip" />
+	<property name="maven-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-config.zip" />
 	<property name="maven-example-jar" value="${basedir}/build/${artifactId}-&hit.version;-example.jar" />
-	<property name="maven-example-jar" value="${basedir}/build/${artifactId}-&hit.version;-example-sources.jar" />
-	<property name="maven-example-config-jar" value="${basedir}/build/${artifactId}-&hit.version;-example-config.zip" />
+	<property name="maven-example-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-example-sources.jar" />
+	<property name="maven-example-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-example-config.zip" />
 
 	<path id="hit.classpath">
 		<fileset dir="${basedir}/lib">
 			<include name="**/*.jar" />
 		</fileset>
+	</path>
+	
+	<path id="hit.src">
+		<dirset dir="${basedir}">
+			<include name="src"/>
+			<include name="example"/>
+		</dirset>
 	</path>
 
 	<target name="init">
@@ -41,10 +48,17 @@
 		<ivy:resolve />
 	</target>
 
+	
+	
+	
+	
+	<!--
+		Creates all the artifacts
+	-->
 	<target name="create deployables" depends="init, resolve, create jar, create source jar, create javadoc jar, create config zip, create example jar, create example source jar, create example config zip" />
 
 	<target name="create jar">
-		<jar destfile="${basedir}/build/hit-&hit.version;.jar" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*">
+		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
@@ -56,7 +70,7 @@
 	</target>
 
 	<target name="create source jar">
-		<jar destfile="${basedir}/build/hit-&hit.version;-sources.jar" basedir="${basedir}/src" excludes="com/github/mrstampy/hit/example/*">
+		<jar destfile="${maven-sources-jar}" basedir="${basedir}/src" excludes="com/github/mrstampy/hit/example/*">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
@@ -73,12 +87,19 @@
 
 		<javadoc 
 			classpathref="hit.classpath" 
-			sourcepath="${basedir}/src" 
+			sourcepathref="hit.src" 
 			packagenames="com.github.mrstampy.*"
 			destdir="${basedir}/build/javadoc">
 		</javadoc>
 
-		<jar destfile="${basedir}/build/hit-&hit.version;-javadoc.jar" basedir="${basedir}/build/javadoc">
+		<antcall target="jar creator">
+			<param name="jar.destfile" value="${maven-javadoc-jar}" />
+			<param name="jar.basedir" value="${basedir}/build/javadoc"/>
+		</antcall>
+	</target>
+
+	<target name="create example jar">
+		<jar destfile="${maven-example-jar}" basedir="${basedir}/bin" includes="com/github/mrstampy/hit/example/*">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
@@ -90,43 +111,28 @@
 	</target>
 
 	<target name="create config zip">
-		<jar destfile="${basedir}/build/hit-&hit.version;-config.zip" basedir="${basedir}/config">
-			<manifest id="hit.javadoc.manifest">
-				<attribute name="Built-By" value="Burton Alexander" />
-				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
-				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/" />
-				<attribute name="Release-Number" value="&hit.version;" />
-				<attribute name="Release-Description" value="Integration" />
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="create example jar">
-		<jar destfile="${basedir}/build/hit-&hit.version;-example.jar" basedir="${basedir}/bin" includes="com/github/mrstampy/hit/example/*">
-			<manifest id="hit.javadoc.manifest">
-				<attribute name="Built-By" value="Burton Alexander" />
-				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
-				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/" />
-				<attribute name="Release-Number" value="&hit.version;" />
-				<attribute name="Release-Description" value="Integration" />
-			</manifest>
-		</jar>
+		<antcall target="jar creator">
+			<param name="jar.destfile" value="${maven-config-zip}" />
+			<param name="jar.basedir" value="${basedir}/config"/>
+		</antcall>
 	</target>
 
 	<target name="create example source jar">
-		<jar destfile="${basedir}/build/hit-&hit.version;-example-sources.jar" basedir="${basedir}/example">
-			<manifest id="hit.javadoc.manifest">
-				<attribute name="Built-By" value="Burton Alexander" />
-				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
-				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/" />
-				<attribute name="Release-Number" value="&hit.version;" />
-				<attribute name="Release-Description" value="Integration" />
-			</manifest>
-		</jar>
+		<antcall target="jar creator">
+			<param name="jar.destfile" value="${maven-example-sources-jar}" />
+			<param name="jar.basedir" value="${basedir}/example"/>
+		</antcall>
 	</target>
 
 	<target name="create example config zip">
-		<jar destfile="${basedir}/build/hit-&hit.version;-example-config.zip" basedir="${basedir}/example.config">
+		<antcall target="jar creator">
+			<param name="jar.destfile" value="${maven-example-config-zip}" />
+			<param name="jar.basedir" value="${basedir}/example.config"/>
+		</antcall>
+	</target>
+	
+	<target name="jar creator">
+		<jar destfile="${jar.destfile}" basedir="${jar.basedir}">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
@@ -137,6 +143,12 @@
 		</jar>
 	</target>
 
+	
+	
+	
+	<!--
+		Deploy main target
+	-->
 	<target name="deploy" depends="create deployables" description="deploy snapshot version to Maven snapshot repository">
 		<artifact:mvn>
 			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
@@ -146,69 +158,59 @@
 			<arg value="-Dfile=${maven-jar}" />
 		</artifact:mvn>
 	</target>
+	
+	
+	
+	
 
+	<!--
+		Stage main target
+	-->
 	<target name="stage" depends="create deployables" description="deploy release version to Maven staging repository">
-		<!-- sign and deploy the main artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-jar}" />
-			<arg value="-Pgpg" />
-		</artifact:mvn>
-
-		<!-- sign and deploy the sources artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-sources-jar}" />
-			<arg value="-Dclassifier=sources" />
-			<arg value="-Pgpg" />
-		</artifact:mvn>
-
-		<!-- sign and deploy the javadoc artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-javadoc-jar}" />
-			<arg value="-Dclassifier=javadoc" />
-			<arg value="-Pgpg" />
-		</artifact:mvn>
-
-		<!-- sign and deploy the config artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-config-jar}" />
-			<arg value="-Dclassifier=config" />
-			<arg value="-Pgpg" />
-		</artifact:mvn>
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-jar}"/>
+			<param name="deployable.classifier" value="jar"/>
+		</antcall>
 		
-		<!-- sign and deploy the example artifact -->
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-sources-jar}"/>
+			<param name="deployable.classifier" value="sources"/>
+		</antcall>
+		
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-javadoc-jar}"/>
+			<param name="deployable.classifier" value="javadoc"/>
+		</antcall>
+		
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-config-zip}"/>
+			<param name="deployable.classifier" value="config"/>
+		</antcall>
+		
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-example-jar}"/>
+			<param name="deployable.classifier" value="example"/>
+		</antcall>
+		
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-example-sources-jar}"/>
+			<param name="deployable.classifier" value="example-sources"/>
+		</antcall>
+		
+		<antcall target="stageImpl">
+			<param name="deployable" value="${maven-example-config-zip}"/>
+			<param name="deployable.classifier" value="example-config"/>
+		</antcall>
+	</target>
+	
+	<target name="stageImpl">
 		<artifact:mvn>
 			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
 			<arg value="-Durl=${maven-staging-repository-url}" />
 			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
 			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-example-jar}" />
-			<arg value="-Pgpg" />
-		</artifact:mvn>
-
-		<!-- sign and deploy the example config artifact -->
-		<artifact:mvn>
-			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
-			<arg value="-Durl=${maven-staging-repository-url}" />
-			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
-			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-example-config-jar}" />
-			<arg value="-Dclassifier=config" />
+			<arg value="-Dfile=${deployable}" />
+			<arg value="-Dclassifier=${deployable.classifier}" />
 			<arg value="-Pgpg" />
 		</artifact:mvn>
 	</target>

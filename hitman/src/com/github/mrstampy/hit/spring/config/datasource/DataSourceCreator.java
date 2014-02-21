@@ -30,10 +30,10 @@ import javax.sql.DataSource;
  * <br>
  * As each datasource implementation varies in its configuration API, the value
  * of these properties are set via the values in 'hibernate.properties' (the
- * first four) and 'custom.properties' (the last two). Should greater
+ * first four) and 'hit.properties' (the last two). Should greater
  * configuration control be required a datasource-specific properties file can
  * be made available on the classpath and specified by the
- * 'datasource.property.file' property in 'custom.properties' with the exception
+ * 'datasource.property.file' property in 'hit.properties' with the exception
  * of the first four properties which are always set from 'hibernate.properties'
  * values.
  * 
