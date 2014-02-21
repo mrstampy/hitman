@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ant [
+	<!ENTITY hit.version "1.0-SNAPSHOT">
+]>
+<project name="hit" basedir="." default="create deployables" 
+	xmlns:ivy="antlib:org.apache.ivy.ant" 
+	xmlns:m="http://ant.apache.org/ivy/maven" 
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+
+	<!-- defined maven snapshots and staging repository id and url -->
+	<property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
+	<property name="maven-snapshots-repository-url" value="https://oss.sonatype.org/content/repositories/snapshots/" />
+	<property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
+	<property name="maven-staging-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
+
+	<!-- define Maven coordinates -->
+	<property name="artifactId" value="hit" />
+
+	<!-- define artifacts' name, which follows the convention of Maven -->
+	<property name="maven-jar" value="${basedir}/build/${artifactId}-&hit.version;.jar" />
+	<property name="maven-javadoc-jar" value="${basedir}/build/${artifactId}-&hit.version;-javadoc.jar" />
+	<property name="maven-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-sources.jar" />
+	<property name="maven-config-jar" value="${basedir}/build/${artifactId}-&hit.version;-config.jar" />
+
+	<path id="hit.classpath">
+		<fileset dir="${basedir}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<delete dir="build"/>
+		<mkdir dir="build"/>
+	</target>
+
+	<target name="create pom">
+		<ivy:makepom ivyfile="ivy.xml" pomfile="hit.pom"/>
+	</target>
+	
+	<target name="resolve">
+		<ivy:resolve />
+	</target>
+	
+	<target name="create deployables" depends="init, resolve, create jar, create source jar, create javadoc jar, create config jar"/>
+	
+	<target name="create jar">
+		<jar destfile="${basedir}/build/hit-&hit.version;.jar" basedir="${basedir}/bin">
+			<manifest id="hit.javadoc.manifest">
+				<attribute name="Built-By" value="Burton Alexander"/>
+				<attribute name="Email-Address" value="burton@users.sourceforge.net"/>
+				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/"/>
+				<attribute name="Release-Number" value="&hit.version;"/>
+				<attribute name="Release-Description" value="Integration"/>
+			</manifest>
+		</jar>
+	</target>
+		
+	<target name="create javadoc jar">
+		<delete dir="${basedir}/build/javadoc"/>
+		<mkdir dir="${basedir}/build/javadoc"/>
+		
+		<javadoc 
+			classpathref="hit.classpath" 
+			sourcepath="${basedir}/src" 
+			packagenames="com.github.mrstampy.*" 
+			destdir="${basedir}/build/javadoc">
+		</javadoc>
+		
+		<jar destfile="${basedir}/build/hit-&hit.version;-javadoc.jar" basedir="${basedir}/build/javadoc">
+			<manifest id="hit.javadoc.manifest">
+				<attribute name="Built-By" value="Burton Alexander"/>
+				<attribute name="Email-Address" value="burton@users.sourceforge.net"/>
+				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/"/>
+				<attribute name="Release-Number" value="&hit.version;"/>
+				<attribute name="Release-Description" value="Integration"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="create config jar">
+		<jar destfile="${basedir}/build/hit-&hit.version;-config.jar" basedir="${basedir}/config">
+			<manifest id="hit.javadoc.manifest">
+				<attribute name="Built-By" value="Burton Alexander"/>
+				<attribute name="Email-Address" value="burton@users.sourceforge.net"/>
+				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/"/>
+				<attribute name="Release-Number" value="&hit.version;"/>
+				<attribute name="Release-Description" value="Integration"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="create source jar">
+		<jar destfile="${basedir}/build/hit-&hit.version;-sources.jar" basedir="${basedir}/src">
+			<manifest id="hit.javadoc.manifest">
+				<attribute name="Built-By" value="Burton Alexander"/>
+				<attribute name="Email-Address" value="burton@users.sourceforge.net"/>
+				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/"/>
+				<attribute name="Release-Number" value="&hit.version;"/>
+				<attribute name="Release-Description" value="Integration"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="deploy" depends="create deployables" description="deploy snapshot version to Maven snapshot repository">
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
+			<arg value="-Durl=${maven-snapshots-repository-url}" />
+			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+		</artifact:mvn>
+	</target>
+
+	<target name="stage" depends="create deployables" description="deploy release version to Maven staging repository">
+		<!-- sign and deploy the main artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-jar}" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the sources artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-sources-jar}" />
+			<arg value="-Dclassifier=sources" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the javadoc artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-javadoc-jar}" />
+			<arg value="-Dclassifier=javadoc" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+
+		<!-- sign and deploy the config artifact -->
+		<artifact:mvn>
+			<arg value="org.apache.maven.plugins:maven-gpg-plugin:1.3:sign-and-deploy-file" />
+			<arg value="-Durl=${maven-staging-repository-url}" />
+			<arg value="-DrepositoryId=${maven-staging-repository-id}" />
+			<arg value="-DpomFile=pom.xml" />
+			<arg value="-Dfile=${maven-config-jar}" />
+			<arg value="-Dclassifier=config" />
+            <arg value="-Pgpg" />
+		</artifact:mvn>
+	</target>
+
+</project>

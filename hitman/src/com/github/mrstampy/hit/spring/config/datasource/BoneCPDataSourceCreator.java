@@ -1,4 +1,4 @@
-package com.github.mrstampy.hitman.spring.config.datasource;
+package com.github.mrstampy.hit.spring.config.datasource;
 
 import java.util.Properties;
 

@@ -1,4 +1,4 @@
-package com.github.mrstampy.hitman.spring.config;
+package com.github.mrstampy.hit.spring.config;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -14,13 +14,13 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.github.mrstampy.hitman.spring.config.datasource.BoneCPDataSourceCreator;
-import com.github.mrstampy.hitman.spring.config.datasource.C3P0DataSourceCreator;
-import com.github.mrstampy.hitman.spring.config.datasource.DataSourceCreator;
-import com.github.mrstampy.hitman.spring.config.datasource.TomcatJDBCDataSourceCreator;
-import com.github.mrstampy.hitman.spring.config.datasource.ViburDBCPDataSourceCreator;
-import com.github.mrstampy.hitman.utils.evictor.CacheEvictor;
-import com.github.mrstampy.hitman.utils.evictor.EhCacheEvictor;
+import com.github.mrstampy.hit.spring.config.datasource.BoneCPDataSourceCreator;
+import com.github.mrstampy.hit.spring.config.datasource.C3P0DataSourceCreator;
+import com.github.mrstampy.hit.spring.config.datasource.DataSourceCreator;
+import com.github.mrstampy.hit.spring.config.datasource.TomcatJDBCDataSourceCreator;
+import com.github.mrstampy.hit.spring.config.datasource.ViburDBCPDataSourceCreator;
+import com.github.mrstampy.hit.utils.evictor.CacheEvictor;
+import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)

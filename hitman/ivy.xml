@@ -3,7 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
 
-	<info organisation="com.github" module="hitman" status="integration" />
+	<info organisation="com.github.mrstampy" module="hit" status="integration" />
+    
+    <publications>
+        <artifact name="hit"/>
+        <artifact name="hit" type="source" ext="jar" />
+        <artifact name="hit" type="javadoc" ext="jar" />
+        <artifact name="hit" type="config" ext="zip" />
+    </publications>
 
 	<dependencies>
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.5" transitive="false"/>
@@ -53,6 +60,5 @@
 		<dependency org="org.jboss.spec.javax.transaction" name="jboss-transaction-api_1.1_spec" rev="1.0.1.Final" transitive="false"/>
 		<dependency org="antlr" name="antlr" rev="2.7.7" />
 		<dependency org="org.javassist" name="javassist" rev="3.18.1-GA" transitive="false"/>
-		<dependency org="org.mockito" name="mockito-core" rev="1.9.5" />
 	</dependencies>
 </ivy-module>
