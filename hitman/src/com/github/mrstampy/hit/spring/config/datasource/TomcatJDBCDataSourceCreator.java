@@ -14,6 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
+/**
+ * Returns a <a
+ * href="https://people.apache.org/~fhanik/jdbc-pool/jdbc-pool.html">Tomcat
+ * JDBC</a> datasource. If enabled, the datasource's properties and methods will
+ * be available via JMX.
+ * 
+ * @author burton
+ * 
+ */
 public class TomcatJDBCDataSourceCreator extends AbstractDataSourceCreator<DataSource> {
   private static final Logger log = LoggerFactory.getLogger(TomcatJDBCDataSourceCreator.class);
 

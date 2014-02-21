@@ -16,25 +16,51 @@ import org.springframework.context.annotation.Bean;
 public abstract class AbstractDataSourceCreator<DS extends DataSource> implements DataSourceCreator<DS> {
   private static final Logger log = LoggerFactory.getLogger(AbstractDataSourceCreator.class);
 
+  /**
+   * Always used by implementations to define the username
+   */
   @Value("${hibernate.connection.username}")
   protected String username;
 
+  /**
+   * Always used by implementations to define the password
+   */
   @Value("${hibernate.connection.password}")
   protected String password;
 
+  /**
+   * Always used by implementations to define the JDBC URL
+   */
   @Value("${hibernate.connection.url}")
   protected String jdbcUrl;
 
+  /**
+   * Always used by implementations to define the JDBC driver class
+   */
   @Value("${hibernate.connection.driver_class}")
   protected String jdbcDriver;
 
+  /**
+   * Used by implementations to define the maximum size of the connection pool
+   * if the 'datasource.property.file property has not been defined.
+   */
   @Value("${max.active.connections}")
   protected int maxActive;
 
+  /**
+   * Used by implementations to define the minimum size of the connection pool
+   * if the 'datasource.property.file property has not been defined.
+   */
   @Value("${min.idle.connections}")
   protected int minIdle;
 
-  @Value("${datasource.properties}")
+  /**
+   * If specified it must be the name of the properties file on the classpath
+   * with the datasource-specific properties. Hibernate properties for
+   * connection will always be used regardless of values specified in such a
+   * file.
+   */
+  @Value("${datasource.property.file}")
   protected String dataSourceProperties;
 
   @Value("${jmx.enabled}")
@@ -69,6 +95,14 @@ public abstract class AbstractDataSourceCreator<DS extends DataSource> implement
     }
   }
 
+  /**
+   * Subclasses implement the creation of the datasource. The properties object
+   * may be null.
+   * 
+   * @param properties
+   * @return
+   * @throws Exception
+   */
   protected abstract DS createDataSource(Properties properties) throws Exception;
 
   private Properties getDataSourceProperties() {

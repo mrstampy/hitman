@@ -1,3 +1,10 @@
+<!-- 
+	HIT sample EhCache configuration, used when Hibernate's second level caching is enabled.
+	
+	http://ehcache.org/
+	http://ehcache.org/documentation/configuration/index 
+	http://docs.jboss.org/hibernate/orm/4.2/manual/en-US/html/ch20.html#performance-cache
+-->
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
          updateCheck="false" monitoring="autodetect"
@@ -5,6 +12,7 @@
          
 	<diskStore path="java.io.tmpdir" />
 	
+	<!-- Cacheable entities without a specific cache configuration will use this -->
 	<defaultCache 
 		maxElementsInMemory="10000" 
 		eternal="false"
@@ -15,6 +23,7 @@
 		<persistence strategy="localTempSwap" />
 	</defaultCache>
 	
+	<!-- Hibernate's standard query cache region -->
 	<cache
 		name="org.hibernate.cache.internal.StandardQueryCache" 
 		maxElementsInMemory="10000" 
@@ -29,6 +38,7 @@
 		<persistence strategy="localTempSwap" />
 	</cache>
 	
+	<!-- Hibernate's update timestamps cache region -->
 	<cache
 		name="org.hibernate.cache.spi.UpdateTimestampsCache" 
 		maxElementsInMemory="10000" 

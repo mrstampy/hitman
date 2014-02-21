@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.github.mrstampy.hit.spring.config.datasource.AbstractDataSourceCreator;
 import com.github.mrstampy.hit.spring.config.datasource.BoneCPDataSourceCreator;
 import com.github.mrstampy.hit.spring.config.datasource.C3P0DataSourceCreator;
 import com.github.mrstampy.hit.spring.config.datasource.DataSourceCreator;
@@ -22,6 +23,16 @@ import com.github.mrstampy.hit.spring.config.datasource.ViburDBCPDataSourceCreat
 import com.github.mrstampy.hit.utils.evictor.CacheEvictor;
 import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 
+/**
+ * Spring/Hibernate configuration class, enabling <a href=
+ * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/aop.html"
+ * >AspectJ proxying</a> and <a href=
+ * "http://docs.spring.io/spring/docs/4.0.2.RELEASE/spring-framework-reference/html/transaction.html"
+ * >transaction management</a>, scanning the project for Spring beans to load.
+ * 
+ * @author burton
+ * 
+ */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
@@ -29,6 +40,12 @@ import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 public class HibernateConfiguration {
   private static final Logger log = LoggerFactory.getLogger(HibernateConfiguration.class);
 
+  /**
+   * Corresponds to the value of the 'data.source.creator.type' property.
+   * 
+   * @author burton
+   * 
+   */
   public enum DataSourceCreatorType {
     TOMCAT, C3P0, BONECP, VIBUR;
   }
@@ -45,6 +62,13 @@ public class HibernateConfiguration {
   @Autowired
   private SessionFactory sessionFactory;
 
+  /**
+   * Returns the {@link AbstractDataSourceCreator} subclass specified by the
+   * value of the property 'data.source.creator.type'.
+   * 
+   * @return
+   * @see AbstractDataSourceCreator
+   */
   @Bean
   public DataSourceCreator<?> dataSourceCreator() {
     log.debug("Creating dataSourceCreator {}", creatorType);
@@ -62,6 +86,15 @@ public class HibernateConfiguration {
     }
   }
 
+  /**
+   * Returns the Hibernate session factory, configured with the values in
+   * 'hibernate.properties' and scans the packages specified by the value of the
+   * property 'entity.packages' for <a href=
+   * "http://docs.jboss.org/hibernate/orm/4.2/manual/en-US/html/ch05.html"
+   * >Hibernate entity classes</a>.
+   * 
+   * @return
+   */
   @Bean
   public SessionFactory sessionFactory() {
     log.debug("Creating session factory");
@@ -72,12 +105,22 @@ public class HibernateConfiguration {
     return builder.buildSessionFactory();
   }
 
+  /**
+   * Returns the Hibernate transaction manager.
+   * 
+   * @return
+   */
   @Bean
   public PlatformTransactionManager transactionManager() {
     log.debug("Creating transaction manager");
     return new HibernateTransactionManager(sessionFactory);
   }
 
+  /**
+   * Returns the {@link CacheEvictor}.
+   * 
+   * @return
+   */
   @Bean
   public CacheEvictor cacheEvictor() {
     log.debug("Creating cache evictor");

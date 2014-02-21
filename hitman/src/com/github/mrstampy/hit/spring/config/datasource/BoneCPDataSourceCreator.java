@@ -7,6 +7,12 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.jolbox.bonecp.BoneCPDataSource;
 
+/**
+ * Returns a <a href="http://jolbox.com/">BoneCP</a> datasource.
+ * 
+ * @author burton
+ * 
+ */
 public class BoneCPDataSourceCreator extends AbstractDataSourceCreator<LazyConnectionDataSourceProxy> {
 
   @Override
@@ -16,8 +22,8 @@ public class BoneCPDataSourceCreator extends AbstractDataSourceCreator<LazyConne
 
   private BoneCPDataSource createBoneCPDataSource(Properties props) throws Exception {
     BoneCPDataSource dataSource = null;
-    
-    if(props == null) {
+
+    if (props == null) {
       dataSource = new BoneCPDataSource();
       dataSource.setMaxConnectionsPerPartition(maxActive);
       dataSource.setMinConnectionsPerPartition(minIdle);

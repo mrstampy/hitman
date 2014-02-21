@@ -10,6 +10,13 @@ import org.vibur.dbcp.ViburDBCPDataSource;
 import org.vibur.dbcp.listener.DestroyListener;
 import org.vibur.dbcp.pool.PoolOperations;
 
+/**
+ * Returns a <a href="https://code.google.com/p/vibur-dbcp/">Vibur DBCP</a> data
+ * source.
+ * 
+ * @author burton
+ * 
+ */
 public class ViburDBCPDataSourceCreator extends AbstractDataSourceCreator<LazyConnectionDataSourceProxy> {
   private static final Logger log = LoggerFactory.getLogger(ViburDBCPDataSourceCreator.class);
 

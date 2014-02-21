@@ -8,6 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * Returns a <a href="http://www.mchange.com/projects/c3p0/">C3P0</a>
+ * datasource.
+ * 
+ * @author burton
+ * 
+ */
 public class C3P0DataSourceCreator extends AbstractDataSourceCreator<ComboPooledDataSource> {
   private static final Logger log = LoggerFactory.getLogger(C3P0DataSourceCreator.class);
 
