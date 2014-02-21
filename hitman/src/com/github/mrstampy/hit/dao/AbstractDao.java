@@ -19,14 +19,14 @@ public abstract class AbstractDao<ENTITY extends Serializable, KEY extends Seria
   protected SessionFactory sessionFactory;
 
   @SuppressWarnings("unchecked")
-  @Transactional(readOnly = true)
+  @Transactional
   public List<ENTITY> getAll() {
     Criteria c = createEntityCriteria();
 
     return c.list();
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public ENTITY byId(KEY key) {
     return byId(getEntityClass(), key);
   }
