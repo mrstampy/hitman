@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+	HIT example logging configuration. 
+ -->
+<configuration scan="true">
+
+	<consolePlugin />
+	
+	<jmxConfigurator />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.github.mrstampy.hit" level="debug" />
+	<logger name="org.springframework" level="info" />
+	<logger name="org.hibernate" level="info" />
+	
+	<!-- set to debug to view generated sql -->
+	<logger name="org.hibernate.SQL" level="debug" />
+	
+	<!-- set to trace to view bound & retrieved parameters -->
+	<logger name="org.hibernate.type" level="info"/>
+	
+	<!-- Irrelevant warning suppressed -->
+	<logger name="org.vibur.dbcp.ViburDBCPDataSource" level="error" />
+
+	<root level="info">
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>
+

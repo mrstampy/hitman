@@ -10,6 +10,9 @@
         <artifact name="hit" type="source" ext="jar" />
         <artifact name="hit" type="javadoc" ext="jar" />
         <artifact name="hit" type="config" ext="zip" />
+        <artifact name="hit" type="example" ext="jar" />
+        <artifact name="hit" type="example-source" ext="jar" />
+        <artifact name="hit" type="example-config" ext="zip" />
     </publications>
 
 	<dependencies>
