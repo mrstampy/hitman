@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ant [
-	<!ENTITY hit.version "1.0-SNAPSHOT">
+	<!ENTITY hit.version "1.1-SNAPSHOT">
 ]>
 <project name="hit" basedir="." default="create deployables" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:m="http://ant.apache.org/ivy/maven" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
@@ -58,7 +58,7 @@
 	<target name="create deployables" depends="init, resolve, create jar, create source jar, create javadoc jar, create config zip, create example jar, create example source jar, create example config zip" />
 
 	<target name="create jar">
-		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*">
+		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*, *.properties, *.xml">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
