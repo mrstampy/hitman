@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * This interface defines the methods to evict second level cache regions via
- * the session factory.
+ * the session factory
  * 
  * @author burton
  * 
