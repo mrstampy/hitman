@@ -70,15 +70,10 @@
 	</target>
 
 	<target name="create source jar">
-		<jar destfile="${maven-sources-jar}" basedir="${basedir}/src" excludes="com/github/mrstampy/hit/example/*">
-			<manifest id="hit.javadoc.manifest">
-				<attribute name="Built-By" value="Burton Alexander" />
-				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
-				<attribute name="Project-Website" value="http://mrstampy.github.com/hitman/" />
-				<attribute name="Release-Number" value="&hit.version;" />
-				<attribute name="Release-Description" value="Integration" />
-			</manifest>
-		</jar>
+		<antcall target="jar creator">
+			<param name="jar.destfile" value="${maven-sources-jar}" />
+			<param name="jar.basedir" value="${basedir}/src"/>
+		</antcall>
 	</target>
 
 	<target name="create javadoc jar">
