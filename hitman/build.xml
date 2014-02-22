@@ -17,10 +17,10 @@
 	<property name="maven-jar" value="${basedir}/build/${artifactId}-&hit.version;.jar" />
 	<property name="maven-javadoc-jar" value="${basedir}/build/${artifactId}-&hit.version;-javadoc.jar" />
 	<property name="maven-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-sources.jar" />
-	<property name="maven-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-config.zip" />
+	<property name="maven-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-config.jar" />
 	<property name="maven-example-jar" value="${basedir}/build/${artifactId}-&hit.version;-example.jar" />
 	<property name="maven-example-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-example-sources.jar" />
-	<property name="maven-example-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-example-config.zip" />
+	<property name="maven-example-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-example-config.jar" />
 
 	<path id="hit.classpath">
 		<fileset dir="${basedir}/lib">
