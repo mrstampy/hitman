@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>HIT by mrstampy</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>HIT</h1>
+          <h2>HIT: A Hibernate quickstart</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/mrstampy/hitman/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/mrstampy/hitman/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/mrstampy/hitman" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="hit-a-hibernate-quickstart" class="anchor" href="#hit-a-hibernate-quickstart"><span class="octicon octicon-link"></span></a>HIT: A Hibernate quickstart</h1>
+
+<p>HIT - Hibernate Induction Trigger - is a library intended to provide all the configuration and dependencies necessary to begin implementing a stand-alone database-backed Spring/Hibernate application, enabling logging, JMX control, transactional boundaries and second level caching. The <a href="https://github.com/mrstampy/hitman/tree/master/hitman/example/com/github/mrstampy/hit/example">example code</a> demonstrates the use of the library; a prototype Spring/Hibernate application can be developed in minutes.</p>
+
+<p>The steps involved to create a HIT-based application are as follows:</p>
+
+<ol>
+<li><p>Choose your database vendor, database driver, database name, user etc.</p></li>
+<li><p>Obtain the HIT library and its dependencies via Ivy, Maven or Gradle (TBA)</p></li>
+<li>
+<p>Create a <a href="http://docs.jboss.org/hibernate/orm/4.2/manual/en-US/html/ch05.html">Hibernate entity</a></p>
+
+<ul>
+<li><a href="https://github.com/mrstampy/hitman/tree/master/hitman/src/com/github/mrstampy/hit/entity">HIT's entity package</a></li>
+<li><a href="https://github.com/mrstampy/hitman/blob/master/hitman/example/com/github/mrstampy/hit/example/Hit.java">example entity</a></li>
+</ul>
+</li>
+<li>
+<p>Create a subclass of <a href="https://github.com/mrstampy/hitman/blob/master/hitman/src/com/github/mrstampy/hit/dao/AbstractDao.java">AbstractDao</a> for the entity</p>
+
+<ul>
+<li><a href="https://github.com/mrstampy/hitman/blob/master/hitman/example/com/github/mrstampy/hit/example/HitDao.java">example DAO</a></li>
+</ul>
+</li>
+<li>
+<p>Create a subclass of <a href="https://github.com/mrstampy/hitman/blob/master/hitman/src/com/github/mrstampy/hit/spring/config/AbstractSpringInitializer.java">AbstractSpringInitializer</a> and any Spring configuration classes necessary</p>
+
+<ul>
+<li><a href="https://github.com/mrstampy/hitman/blob/master/hitman/example/com/github/mrstampy/hit/example/HitInitializer.java">example initializer</a></li>
+<li><a href="https://github.com/mrstampy/hitman/blob/master/hitman/example/com/github/mrstampy/hit/example/HitConfiguration.java">example configuration</a></li>
+</ul>
+</li>
+<li><p>Edit the configuration files and run the application.</p></li>
+</ol><h1>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h1>
+
+<p>Four configuration files are necessary to use HIT and must be available on the classpath:</p>
+
+<p><a href="https://github.com/mrstampy/hitman/tree/master/hitman/config">https://github.com/mrstampy/hitman/tree/master/hitman/config</a>
+<a href="https://github.com/mrstampy/hitman/tree/master/hitman/example.config">https://github.com/mrstampy/hitman/tree/master/hitman/example.config</a></p>
+
+<ol>
+<li><p>hit.properties - defines <a href="https://github.com/mrstampy/hitman/blob/master/hitman/src/com/github/mrstampy/hit/spring/config/PropertiesConfiguration.java">hit-specific properties</a> and can be appended to to add application specific properties.</p></li>
+<li><p><a href="http://docs.jboss.org/hibernate/orm/4.2/manual/en-US/html/ch03.html">hibernate.properties</a> - defines Hibernate-specific properties</p></li>
+<li><p><a href="http://ehcache.org/documentation/configuration/index">ehcache.properties</a> - configuration for EhCache second level caching</p></li>
+<li><p><a href="http://logback.qos.ch/manual/configuration.html">logback.xml</a> - configuration for logging</p></li>
+</ol><h1>
+<a name="datasource" class="anchor" href="#datasource"><span class="octicon octicon-link"></span></a>DataSource</h1>
+
+<p>Included in the distribution are four implementations of a DataSource JDBC connection pool:</p>
+
+<ul>
+<li><a href="http://jolbox.com/">BoneCP</a></li>
+<li><a href="http://www.mchange.com/projects/c3p0/">C3P0</a></li>
+<li><a href="https://people.apache.org/%7Efhanik/jdbc-pool/jdbc-pool.html">Tomcat JDBC*</a></li>
+<li><a href="https://code.google.com/p/vibur-dbcp/">Vibur DBCP</a></li>
+</ul><p>To switch between the four change the value of the property 'data.source.creator.type' in hit.properties. Once a connection pool has been chosen for your application the other CP jar dependencies can be excluded from the application build.</p>
+
+<p>*Tomcat JDBC uses the JULI logging framework.  There is no official juli-over-slf4j jar file, however adding the classes from <a href="https://github.com/pellcorp/juli-over-slf4j">https://github.com/pellcorp/juli-over-slf4j</a> to your application will enable logging for this connection pool.</p>
+
+<h2>
+<a name="datasource-configuration" class="anchor" href="#datasource-configuration"><span class="octicon octicon-link"></span></a>DataSource Configuration</h2>
+
+<p>For simple, low to medium volume data access typically 6 properties are of importance when configuring a datasource:</p>
+
+<ol>
+<li>The JDBC driver class</li>
+<li>The JDBC URL to the database</li>
+<li>The username for the database</li>
+<li>The password for the database</li>
+<li>The maximum number of connections the datasource can pool</li>
+<li>The minimum number of connections in the pool when idle</li>
+</ol><p>As each datasource implementation varies in its configuration API, the value of these properties are set via the values in 'hibernate.properties' (the first four) and 'hit.properties' (the last two). Should greater configuration control be required a datasource-specific properties file can be made available on the classpath and specified by the 'datasource.property.file' property in 'hit.properties', with the exception of the first four properties which are always set from 'hibernate.properties' values.</p>
+        </section>
+
+        <footer>
+          HIT is maintained by <a href="https://github.com/mrstampy">mrstampy</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
