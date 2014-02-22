@@ -107,16 +107,18 @@ public abstract class AbstractDataSourceCreator<DS extends DataSource> implement
 
   private Properties getDataSourceProperties() {
     if (isEmpty(dataSourceProperties)) {
+      log.info("Configuring datasource with default properties");
       return null;
     }
 
     Properties props = new Properties();
 
     try {
-      props.load(getClass().getResourceAsStream(dataSourceProperties));
+      props.load(getClass().getResourceAsStream("/" + dataSourceProperties));
+      log.info("Configuring datasource with properties {}", dataSourceProperties);
       return props;
     } catch (Exception e) {
-      log.error("Could not load {}", dataSourceProperties, e);
+      log.error("Could not load {}, using defaults", dataSourceProperties, e);
     }
 
     return null;

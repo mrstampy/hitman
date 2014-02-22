@@ -89,6 +89,10 @@
 			classpathref="hit.classpath" 
 			sourcepathref="hit.src" 
 			packagenames="com.github.mrstampy.*"
+			description="HIT - A Hibernate quickstart"
+			doctitle="HIT - A Hibernate quickstart"
+			header="HIT - A Hibernate quickstart"
+			footer="brought to you by Mr. Stampy, your Hibernate Induction Triggerman"
 			destdir="${basedir}/build/javadoc">
 		</javadoc>
 
