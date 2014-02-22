@@ -149,12 +149,50 @@
 		Deploy main target
 	-->
 	<target name="deploy" depends="create deployables" description="deploy snapshot version to Maven snapshot repository">
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-jar}"/>
+			<param name="deployable.classifier" value="jar"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-sources-jar}"/>
+			<param name="deployable.classifier" value="sources"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-javadoc-jar}"/>
+			<param name="deployable.classifier" value="javadoc"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-config-zip}"/>
+			<param name="deployable.classifier" value="config"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-example-jar}"/>
+			<param name="deployable.classifier" value="example"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-example-sources-jar}"/>
+			<param name="deployable.classifier" value="example-sources"/>
+		</antcall>
+		
+		<antcall target="deployImpl">
+			<param name="deployable" value="${maven-example-config-zip}"/>
+			<param name="deployable.classifier" value="example-config"/>
+		</antcall>
+	</target>
+	
+	<target name="deployImpl">
 		<artifact:mvn>
 			<arg value="org.apache.maven.plugins:maven-deploy-plugin:2.6:deploy-file" />
 			<arg value="-Durl=${maven-snapshots-repository-url}" />
 			<arg value="-DrepositoryId=${maven-snapshots-repository-id}" />
 			<arg value="-DpomFile=pom.xml" />
-			<arg value="-Dfile=${maven-jar}" />
+			<arg value="-Dfile=${deployable}" />
+			<arg value="-Dclassifier=${deployable.classifier}" />
 		</artifact:mvn>
 	</target>
 	
