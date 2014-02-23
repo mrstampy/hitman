@@ -10,7 +10,7 @@
 
 	<dependencies>
 		<dependency org="com.github.mrstampy" name="hit" rev="&hit.version;"/>
-		
+
 		<!-- Optional, if you wish to run the example code -->
 		<dependency org="com.github.mrstampy" name="hit-example" rev="&hit.version;"/>
 
