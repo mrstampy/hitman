@@ -7,7 +7,7 @@
   <groupId>com.github.mrstampy</groupId>
   <artifactId>hit</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.0</version>
   <description>Hibernate Induction Trigger - A Hibernate quickstart library</description>
   <url>http://mrstampy.github.com/hitman/</url>
   <licenses>
