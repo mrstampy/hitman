@@ -11,9 +11,6 @@
         <artifact name="hit" type="pom" ext="pom" />
         <artifact name="hit" type="config" m:classifier="config" ext="zip" />
         <artifact name="hit" type="javadoc" m:classifier="javadoc" ext="jar" />
-        <artifact name="hit" type="example" m:classifier="example" ext="jar" />
-        <artifact name="hit" type="example-sources" m:classifier="example-sources" ext="jar" />
-        <artifact name="hit" type="example-config" m:classifier="example-config" ext="zip" />
         <artifact name="hit" type="sources" m:classifier="sources" ext="jar" />
     </publications>
 

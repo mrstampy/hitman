@@ -7,7 +7,7 @@
   <groupId>com.github.mrstampy</groupId>
   <artifactId>hit</artifactId>
   <packaging>jar</packaging>
-  <version>1.1-SNAPSHOT</version>
+  <version>$hit.version</version>
   <description>Hibernate Induction Trigger - A Hibernate quickstart library</description>
   <url>http://mrstampy.github.com/hitman/</url>
   <licenses>
@@ -270,4 +270,46 @@
       <optional>false</optional>
     </dependency>
   </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+	      <groupId>org.vibur</groupId>
+	      <artifactId>vibur-object-pool</artifactId>
+	      <exclusions>
+	      	<exclusion>
+	      		<groupId>org.slf4j</groupId>
+	      		<artifactId>slf4j-api</artifactId>
+	      	</exclusion>
+	      	<exclusion>
+	      		<groupId>log4j</groupId>
+	      		<artifactId>log4j</artifactId>
+	      	</exclusion>
+	      	<exclusion>
+	      		<groupId>org.slf4j</groupId>
+	      		<artifactId>slf4j-log4j12</artifactId>
+	      	</exclusion>
+	      </exclusions>
+  		</dependency>
+  		<dependency>
+	      <groupId>org.hibernate</groupId>
+	      <artifactId>hibernate-ehcache</artifactId>
+	      <exclusions>
+	      	<exclusion>
+				<groupId>net.sf.ehcache</groupId>
+	      		<artifactId>ehcache-core</artifactId>
+	      	</exclusion>
+	      </exclusions>
+  		</dependency>
+  		<dependency>
+	      <groupId>dom4j</groupId>
+	      <artifactId>dom4j</artifactId>
+	      <exclusions>
+	      	<exclusion>
+				<groupId>xml-apis</groupId>
+	      		<artifactId>xml-apis</artifactId>
+	      	</exclusion>
+	      </exclusions>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>

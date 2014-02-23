@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ant [
-	<!ENTITY hit.version "1.1-SNAPSHOT">
+	<!ENTITY hit.version "1.0">
 ]>
 <project name="hit" basedir="." default="create deployables" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:m="http://ant.apache.org/ivy/maven" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
 	<!-- defined maven snapshots and staging repository id and url -->
+	<property name="hit.version" value="&hit.version;"/>
 	<property name="maven-snapshots-repository-id" value="sonatype-nexus-snapshots" />
 	<property name="maven-snapshots-repository-url" value="https://oss.sonatype.org/content/repositories/snapshots/" />
 	<property name="maven-staging-repository-id" value="sonatype-nexus-staging" />
@@ -18,9 +19,10 @@
 	<property name="maven-javadoc-jar" value="${basedir}/build/${artifactId}-&hit.version;-javadoc.jar" />
 	<property name="maven-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-sources.jar" />
 	<property name="maven-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-config.zip" />
-	<property name="maven-example-jar" value="${basedir}/build/${artifactId}-&hit.version;-example.jar" />
-	<property name="maven-example-sources-jar" value="${basedir}/build/${artifactId}-&hit.version;-example-sources.jar" />
-	<property name="maven-example-config-zip" value="${basedir}/build/${artifactId}-&hit.version;-example-config.zip" />
+	<property name="maven-example-jar" value="${basedir}/build/${artifactId}-example-&hit.version;.jar" />
+	<property name="maven-example-javadoc-jar" value="${basedir}/build/${artifactId}-example-&hit.version;-javadoc.jar" />
+	<property name="maven-example-sources-jar" value="${basedir}/build/${artifactId}-example-&hit.version;-sources.jar" />
+	<property name="maven-example-config-zip" value="${basedir}/build/${artifactId}-example-&hit.version;-config.zip" />
 
 	<path id="hit.classpath">
 		<fileset dir="${basedir}/lib">
@@ -46,35 +48,84 @@
 
 	<ivy:settings refid="ivysettings" file="${user.home}/.ivy/ivysettings-sonatype.xml"/>
 	
-	<target name="resolve">
-		<ivy:resolve />
-	</target>
-	
 	<target name="snapshot" depends="create deployables, deploy snapshot"/>
+	<target name="snapshot-example" depends="create example deployables, deploy example snapshot"/>
 	
 	<target name="staging" depends="create deployables, deploy staging"/>
+	<target name="staging-examples" depends="create example deployables, deploy example staging"/>
 	
-	<target name="deploy snapshot" depends="resolve">
+	<target name="deploy snapshot">
+		<antcall target="copypom">
+			<param name="to.pom" value="${basedir}/build/hit-&hit.version;.pom"/>
+			<param name="from.pom" value="${basedir}/pom.xml"/>
+		</antcall>
+		
 		<antcall target="deployImpl">
 			<param name="resolver" value="sonatype-nexus-snapshots"/>
 			<param name="status" value="integration"/>
+			<param name="hit.module" value="hit"/>
+			<param name="hit.ivy.file" value="ivy.xml"/>
 		</antcall>
 	</target>
 	
-	<target name="deploy staging" depends="resolve">
+	<target name="deploy example snapshot">
+		<antcall target="copypom">
+			<param name="to.pom" value="${basedir}/build/hit-example-&hit.version;.pom"/>
+			<param name="from.pom" value="${basedir}/pom-example.xml"/>
+		</antcall>
+		
+		<move file="${maven-javadoc-jar}" tofile="${maven-example-javadoc-jar}"/>
+		
+		<antcall target="deployImpl">
+			<param name="resolver" value="sonatype-nexus-snapshots"/>
+			<param name="status" value="integration"/>
+			<param name="hit.module" value="hit-example"/>
+			<param name="hit.ivy.file" value="ivy-example.xml"/>
+		</antcall>
+	</target>
+	
+	<target name="deploy staging">
+		<antcall target="copypom">
+			<param name="to.pom" value="${basedir}/build/hit-&hit.version;.pom"/>
+			<param name="from.pom" value="${basedir}/pom.xml"/>
+		</antcall>
+		
 		<antcall target="deployImpl">
 			<param name="resolver" value="sonatype-nexus-staging"/>
 			<param name="status" value="release"/>
+			<param name="hit.module" value="hit"/>
+			<param name="hit.ivy.file" value="ivy.xml"/>
 		</antcall>
 	</target>
 	
-	<target name="deployImpl" depends="resolve">
-		<copyfile dest="${basedir}/build/hit-&hit.version;.pom" src="${basedir}/pom.xml"/>
+	<target name="deploy example staging">
+		<antcall target="copypom">
+			<param name="to.pom" value="${basedir}/build/hit-example-&hit.version;.pom"/>
+			<param name="from.pom" value="${basedir}/pom-example.xml"/>
+		</antcall>
+		
+		<move file="${maven-javadoc-jar}" tofile="${maven-example-javadoc-jar}"/>
+		
+		<antcall target="deployImpl">
+			<param name="resolver" value="sonatype-nexus-staging"/>
+			<param name="status" value="release"/>
+			<param name="hit.module" value="hit"/>
+			<param name="hit.ivy.file" value="ivy.xml"/>
+		</antcall>
+	</target>
+	
+	<target name="copypom">
+		<copyfile dest="${to.pom}" src="${from.pom}"/>
+		<replace file="${to.pom}" token="$hit.version" value="&hit.version;"/>
+	</target>
+	
+	<target name="deployImpl">
+		<ivy:resolve file="${hit.ivy.file}"/>
 		<ivy:publish
 			artifactspattern="${basedir}/build/[artifact]-[revision](-[classifier]).[ext]"
 			resolver="${resolver}"
 			organisation="com.github.mrstampy"
-			module="hit"
+			module="${hit.module}"
 			overwrite="true"
 			status="${status}"
 			pubrevision="&hit.version;">
@@ -84,7 +135,17 @@
 	<!--
 		Creates all the artifacts
 	-->
-	<target name="create deployables" depends="init, resolve, create jar, create source jar, create javadoc jar, create config zip, create example jar, create example source jar, create example config zip" />
+	<target name="create deployables" depends="init">
+		<ivy:resolve />
+		<antcall target="create deployables impl"/>
+	</target>
+	<target name="create deployables impl" depends="create jar, create source jar, create javadoc jar, create config zip" />
+	
+	<target name="create example deployables" depends="init">
+		<ivy:resolve file="${basedir}/ivy-example.xml"/>
+		<antcall target="create example deployables impl"/>
+	</target>
+	<target name="create example deployables impl" depends="create javadoc jar, create example jar, create example source jar, create example config zip" />
 
 	<target name="create jar">
 		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*, *.properties, *.xml">
