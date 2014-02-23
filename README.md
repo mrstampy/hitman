@@ -7,7 +7,7 @@ The steps involved to create a HIT-based application are as follows:
 0. Choose your database vendor, database driver, database name, user etc. and create a blank database
 
 1. Obtain the HIT library and its dependencies via Ivy, Maven or Gradle (TBA, the artifacts will be available shortly)
-  * Ivy - &lt;dependency org="com.github.mrstampy" name="hit" rev="1.0"/&gt;
+  * Ivy - [sample Ivy file](https://github.com/mrstampy/hitman/tree/master/hitman/ivy-hit-usage.xml)
   * Maven:<br>
            &lt;dependency&gt;<br>
                &nbsp;&nbsp;&lt;groupId&gt;com.github.mrstampy&lt;/groupId&gt;<br>
