@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ant [
-	<!ENTITY hit.version "1.0">
+	<!ENTITY hit.version "1.1-SNAPSHOT">
 ]>
 <project name="hit" basedir="." default="create deployables" xmlns:ivy="antlib:org.apache.ivy.ant" xmlns:m="http://ant.apache.org/ivy/maven" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 
@@ -52,7 +52,7 @@
 	<target name="snapshot-example" depends="create example deployables, deploy example snapshot"/>
 	
 	<target name="staging" depends="create deployables, deploy staging"/>
-	<target name="staging-examples" depends="create example deployables, deploy example staging"/>
+	<target name="staging-example" depends="create example deployables, deploy example staging"/>
 	
 	<target name="deploy snapshot">
 		<antcall target="copypom">
