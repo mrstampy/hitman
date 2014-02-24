@@ -312,4 +312,5 @@
   		</dependency>
   	</dependencies>
   </dependencyManagement>
+  <name>HIT - A Hibernate quickstart library</name>
 </project>

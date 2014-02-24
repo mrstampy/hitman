@@ -78,4 +78,5 @@
   		</dependency>
   	</dependencies>
   </dependencyManagement>
+  <name>Example for HIT - A Hibernate quickstart library</name>
 </project>
