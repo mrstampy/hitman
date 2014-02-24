@@ -148,7 +148,7 @@
 	<target name="create example deployables impl" depends="create javadoc jar, create example jar, create example source jar, create example config zip" />
 
 	<target name="create jar">
-		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="com/github/mrstampy/hit/example/*, *.properties, *.xml">
+		<jar destfile="${maven-jar}" basedir="${basedir}/bin" excludes="**/*example*/**, *.properties, *.xml">
 			<manifest id="hit.javadoc.manifest">
 				<attribute name="Built-By" value="Burton Alexander" />
 				<attribute name="Email-Address" value="burton@users.sourceforge.net" />
