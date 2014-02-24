@@ -110,7 +110,7 @@
 			<param name="resolver" value="sonatype-nexus-staging"/>
 			<param name="status" value="release"/>
 			<param name="hit.module" value="hit"/>
-			<param name="hit.ivy.file" value="ivy.xml"/>
+			<param name="hit.ivy.file" value="ivy-example.xml"/>
 		</antcall>
 	</target>
 	
