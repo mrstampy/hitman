@@ -36,10 +36,6 @@ import com.jolbox.bonecp.BoneCPDataSource;
  */
 @Component
 public class BoneCPDataSourceCreator extends AbstractDataSourceCreator<LazyConnectionDataSourceProxy> {
-  
-  public BoneCPDataSourceCreator() {
-    System.out.println("Bone'd");
-  }
 
   @Override
   protected LazyConnectionDataSourceProxy createDataSource(Properties props) throws Exception {
