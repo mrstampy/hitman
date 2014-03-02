@@ -26,6 +26,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+import org.springframework.stereotype.Component;
 import org.vibur.dbcp.ViburDBCPDataSource;
 import org.vibur.dbcp.listener.DestroyListener;
 import org.vibur.dbcp.pool.PoolOperations;
@@ -37,6 +38,7 @@ import org.vibur.dbcp.pool.PoolOperations;
  * @author burton
  * 
  */
+@Component
 public class ViburDBCPDataSourceCreator extends AbstractDataSourceCreator<LazyConnectionDataSourceProxy> {
   private static final Logger log = LoggerFactory.getLogger(ViburDBCPDataSourceCreator.class);
 
@@ -68,6 +70,11 @@ public class ViburDBCPDataSourceCreator extends AbstractDataSourceCreator<LazyCo
     }));
 
     return dataSource;
+  }
+
+  @Override
+  public void init() throws Exception {
+    
   }
 
 }

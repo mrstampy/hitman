@@ -20,6 +20,10 @@
  */
 package com.github.mrstampy.hit.spring.config;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +39,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.github.mrstampy.hit.spring.config.datasource.AbstractDataSourceCreator;
-import com.github.mrstampy.hit.spring.config.datasource.BoneCPDataSourceCreator;
-import com.github.mrstampy.hit.spring.config.datasource.C3P0DataSourceCreator;
 import com.github.mrstampy.hit.spring.config.datasource.DataSourceCreator;
-import com.github.mrstampy.hit.spring.config.datasource.TomcatJDBCDataSourceCreator;
-import com.github.mrstampy.hit.spring.config.datasource.ViburDBCPDataSourceCreator;
 import com.github.mrstampy.hit.utils.evictor.CacheEvictor;
 import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 
@@ -60,27 +60,20 @@ import com.github.mrstampy.hit.utils.evictor.EhCacheEvictor;
 public class HibernateConfiguration {
   private static final Logger log = LoggerFactory.getLogger(HibernateConfiguration.class);
 
-  /**
-   * Corresponds to the value of the 'data.source.creator.type' property.
-   * 
-   * @author burton
-   * 
-   */
-  public enum DataSourceCreatorType {
-    TOMCAT, C3P0, BONECP, VIBUR;
-  }
-
   @Value("${entity.packages}")
   private String[] entityPackages;
 
   @Value("${data.source.creator.type}")
-  private DataSourceCreatorType creatorType;
+  private String creatorType;
 
   @Autowired
   private DataSourceCreator<?> dataSourceCreator;
 
   @Autowired
   private SessionFactory sessionFactory;
+
+  @Resource
+  private List<AbstractDataSourceCreator<?>> dataSourceCreators;
 
   /**
    * Returns the {@link AbstractDataSourceCreator} subclass specified by the
@@ -92,18 +85,19 @@ public class HibernateConfiguration {
   @Bean
   public DataSourceCreator<?> dataSourceCreator() {
     log.debug("Creating dataSourceCreator {}", creatorType);
-    switch (creatorType) {
-    case BONECP:
-      return new BoneCPDataSourceCreator();
-    case C3P0:
-      return new C3P0DataSourceCreator();
-    case TOMCAT:
-      return new TomcatJDBCDataSourceCreator();
-    case VIBUR:
-      return new ViburDBCPDataSourceCreator();
-    default:
-      throw new IllegalArgumentException("data.source.creator.type must be one of BONECP, C3P0, VIBUR, or TOMCAT");
+
+    for (DataSourceCreator<?> creator : dataSourceCreators) {
+      if (creator.getClass().getSimpleName().startsWith(creatorType)) {
+        try {
+          creator.init();
+          return creator;
+        } catch (Exception e) {
+          log.error("Unexpected exception in creator {}", creator.getClass().getName(), e);
+        }
+      }
     }
+
+    throw new IllegalArgumentException("data.source.creator.type " + creatorType + " not found");
   }
 
   /**

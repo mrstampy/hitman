@@ -22,6 +22,8 @@ package com.github.mrstampy.hit.spring.config.datasource;
 
 import javax.sql.DataSource;
 
+import com.github.mrstampy.hit.spring.config.HibernateConfiguration;
+
 /**
  * Implementations return a DataSource implementation. For simple, low to medium
  * volume data access typically 6 properties are of importance when configuring
@@ -58,5 +60,14 @@ import javax.sql.DataSource;
 public interface DataSourceCreator<DS extends DataSource> {
 
   DS dataSource();
+
+  /**
+   * Called by {@link HibernateConfiguration} to perform any post construction
+   * initialization upon selection.
+   * 
+   * @see TomcatJDBCDataSourceCreator
+   * @throws Exception
+   */
+  void init() throws Exception;
 
 }

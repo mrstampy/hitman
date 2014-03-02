@@ -23,6 +23,7 @@ package com.github.mrstampy.hit.spring.config.datasource;
 import java.util.Properties;
 
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+import org.springframework.stereotype.Component;
 
 import com.jolbox.bonecp.BoneCPConfig;
 import com.jolbox.bonecp.BoneCPDataSource;
@@ -33,7 +34,12 @@ import com.jolbox.bonecp.BoneCPDataSource;
  * @author burton
  * 
  */
+@Component
 public class BoneCPDataSourceCreator extends AbstractDataSourceCreator<LazyConnectionDataSourceProxy> {
+  
+  public BoneCPDataSourceCreator() {
+    System.out.println("Bone'd");
+  }
 
   @Override
   protected LazyConnectionDataSourceProxy createDataSource(Properties props) throws Exception {
@@ -58,6 +64,11 @@ public class BoneCPDataSourceCreator extends AbstractDataSourceCreator<LazyConne
     dataSource.setPassword(password);
 
     return dataSource;
+  }
+
+  @Override
+  public void init() {
+    
   }
 
 }

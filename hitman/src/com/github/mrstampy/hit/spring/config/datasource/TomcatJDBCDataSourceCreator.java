@@ -22,7 +22,6 @@ package com.github.mrstampy.hit.spring.config.datasource;
 
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -33,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
+import org.springframework.stereotype.Component;
 
 /**
  * Returns a <a
@@ -43,14 +43,14 @@ import org.springframework.jmx.support.MBeanServerFactoryBean;
  * @author burton
  * 
  */
+@Component
 public class TomcatJDBCDataSourceCreator extends AbstractDataSourceCreator<DataSource> {
   private static final Logger log = LoggerFactory.getLogger(TomcatJDBCDataSourceCreator.class);
 
   @Autowired
   private MBeanServerFactoryBean server;
 
-  @PostConstruct
-  public void postConstruct() throws Exception {
+  public void init() throws Exception {
     log.debug("Registering Tomcat JDBC datasource with JMX");
 
     DataSource ds = dataSource();
