@@ -76,11 +76,17 @@ public class HibernateConfiguration {
   private List<AbstractDataSourceCreator<?>> dataSourceCreators;
 
   /**
-   * Returns the {@link AbstractDataSourceCreator} subclass specified by the
-   * value of the property 'data.source.creator.type'.
+   * Returns the {@link AbstractDataSourceCreator} subclass matching the first
+   * characters of the class name against the value of the property
+   * 'data.source.creator.type'.<br>
+   * <br>
+   * Additional subclasses can be created for other datasources, annotated with
+   * @Component.  They will be loaded on startup.
    * 
    * @return
    * @see AbstractDataSourceCreator
+   * @see ComponentScan
+   * @see AbstractSpringInitializer#scanPackages(String...)
    */
   @Bean
   public DataSourceCreator<?> dataSourceCreator() {
