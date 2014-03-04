@@ -88,6 +88,17 @@ public abstract class AbstractDao<ENTITY extends Serializable, KEY extends Seria
   }
 
   /**
+   * Return the entity specified by the key. Non-key properties are lazy loaded.
+   * 
+   * @param key
+   * @return
+   */
+  @Transactional
+  public ENTITY byIdRef(KEY key) {
+    return byIdRef(getEntityClass(), key);
+  }
+
+  /**
    * Return the entity specified by the key.
    * 
    * @param key
@@ -135,7 +146,7 @@ public abstract class AbstractDao<ENTITY extends Serializable, KEY extends Seria
    */
   @Transactional
   public void deleteKey(KEY key) {
-    delete(byId(key));
+    delete(byIdRef(key));
   }
 
   /**
@@ -159,6 +170,22 @@ public abstract class AbstractDao<ENTITY extends Serializable, KEY extends Seria
   /**
    * Returns the database entity specified by its entity class and key. Any
    * entity can be obtained via this method, allowing the DAO subclass to
+   * perform multi-table operations in implemented methods. The entity returned
+   * has only the key eagerly populated; other attributes can only be accessed
+   * in the same transaction.
+   * 
+   * @param clazz
+   * @param key
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  protected <T extends Serializable, K extends Serializable> T byIdRef(Class<T> clazz, K key) {
+    return (T) getSession().byId(clazz).getReference(key);
+  }
+
+  /**
+   * Returns the database entity specified by its entity class and key. Any
+   * entity can be obtained via this method, allowing the DAO subclass to
    * perform multi-table operations in implemented methods.
    * 
    * @param clazz
@@ -167,7 +194,7 @@ public abstract class AbstractDao<ENTITY extends Serializable, KEY extends Seria
    */
   @SuppressWarnings("unchecked")
   protected <T extends Serializable, K extends Serializable> T byId(Class<T> clazz, K key) {
-    return (T) getSession().byId(clazz).getReference(key);
+    return (T) getSession().byId(clazz).load(key);
   }
 
   /**
