@@ -7,6 +7,8 @@ HIT - Hibernate Induction Trigger - is a library intended to provide all the con
 - Data source connection pools are now specified by the first few characters of the [AbstractDataSourceCreator](https://github.com/mrstampy/hitman/blob/master/hitman/src/com/github/mrstampy/hit/spring/config/datasource/AbstractDataSourceCreator.java) implementation.  Custom creators can easily be added.
 - AbstractDao now defines byIdRef vs. byId - the former lazy loads the non-key properties while the latter loads all entity properties.
 
+# Usage
+
 The steps involved to create a HIT-based application are as follows:
 
 0. Choose your database vendor, database driver, database name, user etc. and create a blank database
