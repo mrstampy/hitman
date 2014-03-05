@@ -2,6 +2,11 @@
 
 HIT - Hibernate Induction Trigger - is a library intended to provide all the configuration and dependencies necessary to begin implementing a stand-alone database-backed Spring/Hibernate application, enabling logging, JMX control, transactional boundaries and second level caching. The [example code](https://github.com/mrstampy/hitman/tree/master/hitman/example/com/github/mrstampy/hit/example) demonstrates the use of the library; a prototype Spring/Hibernate application can be developed in minutes. A Java 6 runtime (minimum) is required.
 
+# Version 1.1 - released 5/03/14
+
+- Data source connection pools are now specified by the first few characters of the [AbstractDataSourceCreator](https://github.com/mrstampy/hitman/blob/master/hitman/src/com/github/mrstampy/hit/spring/config/datasource/AbstractDataSourceCreator.java) implementation.  Custom creators can easily be added.
+- AbstractDao now defines byIdRef vs. byId - the former lazy loads the non-key properties while the latter loads all entity properties.
+
 The steps involved to create a HIT-based application are as follows:
 
 0. Choose your database vendor, database driver, database name, user etc. and create a blank database
