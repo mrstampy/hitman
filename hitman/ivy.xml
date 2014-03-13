@@ -55,7 +55,7 @@
 		<dependency org="org.aspectj" name="aspectjrt" rev="1.7.4"/>
 		<dependency org="org.jvnet.opendmk" name="jmxremote_optional" rev="1.0_01-ea"/>
 		
-		<dependency org="mysql" name="mysql-connector-java" rev="5.1.28"/>
+		<dependency org="org.apache.derby" name="derby" rev="10.10.1.1"/>
 		<dependency org="cglib" name="cglib-nodep" rev="3.1" transitive="false"/>
 		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false"/>
 		<dependency org="org.jboss.logging" name="jboss-logging" rev="3.1.0.GA" transitive="false"/>
