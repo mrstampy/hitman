@@ -23,7 +23,7 @@ The steps involved to create a HIT-based application are as follows:
            &lt;dependency&gt;<br>
                &nbsp;&nbsp;&lt;groupId&gt;com.github.mrstampy&lt;/groupId&gt;<br>
                &nbsp;&nbsp;&lt;artifactId&gt;hit&lt;/artifactId&gt;<br>
-               &nbsp;&nbsp;&lt;version&gt;1.1&lt;/version&gt;<br>
+               &nbsp;&nbsp;&lt;version&gt;1.2&lt;/version&gt;<br>
            &lt;/dependency&gt;
 
 2. Create a [Hibernate entity](http://docs.jboss.org/hibernate/orm/4.2/manual/en-US/html/ch05.html)
