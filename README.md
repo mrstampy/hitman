@@ -2,6 +2,8 @@
 
 HIT - Hibernate Induction Trigger - is a library intended to provide all the configuration and dependencies necessary to begin implementing a stand-alone database-backed Spring/Hibernate application, enabling logging, JMX control, transactional boundaries and second level caching. The [example code](https://github.com/mrstampy/hitman/tree/master/hitman/example/com/github/mrstampy/hit/example) demonstrates the use of the library; a prototype Spring/Hibernate application can be developed in minutes. A Java 6 runtime (minimum) is required.
 
+[HIT on G+](https://plus.google.com/b/112109161308370431802/112109161308370431802/)
+
 # Version 1.2 - released 14/03/14
 
 - Example code now using an embedded Derby database requiring no database setup by the user.
